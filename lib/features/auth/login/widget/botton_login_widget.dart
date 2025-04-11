@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recycle_app/core/service/auth.dart';
 import 'package:recycle_app/core/service/style.dart';
 
 class BottonLoginWidget extends StatelessWidget {
@@ -10,8 +11,7 @@ class BottonLoginWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
       child: GestureDetector(
         onTap: () {
-          // هنا تحط الأكشن لما المستخدم يضغط
-          print("Google Sign-In Pressed");
+          Auth().signInWithGoogle(context);
         },
         child: Container(
           decoration: BoxDecoration(
