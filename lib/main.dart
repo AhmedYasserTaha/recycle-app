@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recycle_app/features/onboarding/onboarding_page.dart';
+import 'package:recycle_app/features/auth/login/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,9 +10,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: OnboardingPage(),
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: LoginPage());
   }
 }
