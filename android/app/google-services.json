@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "695046041251",
+    "project_id": "running-shoes-app",
+    "storage_bucket": "running-shoes-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695046041251:android:46499ba42b94d09da4d916",
+        "android_client_info": {
+          "package_name": "com.example.recycle_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695046041251-9h7m2u1toaotf9s8lqiplk30ekn9ijp9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwJmMfTLYU5lAsJsxe5tULpxK1VYLH-UQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695046041251-9h7m2u1toaotf9s8lqiplk30ekn9ijp9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "695046041251-54bh51dv0noie5k47hlnd7tsqi29o4j4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.eCommreceApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

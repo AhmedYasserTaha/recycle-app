@@ -8,40 +8,50 @@ class LoginPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Center(
-            child: Image.asset(
-              "assets/images/login.png",
-              width: double.infinity,
-              height: 300,
-              fit: BoxFit.cover,
-            ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Image.asset(
+                "assets/images/login.png",
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.3,
+                fit: BoxFit.cover,
+              ),
+              const SizedBox(height: 20),
+              Image.asset(
+                "assets/images/recycle1.png",
+                height: 100,
+                width: 100,
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "Reduce. Reuse. Recycle.",
+                style: Styles.textStyle25,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "Repeat!",
+                style: Styles.textStyle25.copyWith(color: Colors.green),
+              ),
+              const SizedBox(height: 30),
+              Text(
+                "Every item you recycle\nmakes a difference!",
+                style: Styles.textStyle20,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 30),
+              Text(
+                "Get Started",
+                style: Styles.textStyle20.copyWith(color: Colors.green),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              BottonLoginWidget(),
+            ],
           ),
-          SizedBox(height: 20),
-          Image.asset("assets/images/recycle1.png", height: 120, width: 120),
-          SizedBox(height: 10),
-          Text("Reduce. Reuse. Recycle.", style: Styles.textStyle25),
-          SizedBox(height: 10),
-          Text(
-            "Repeat!",
-            style: Styles.textStyle25.copyWith(color: Colors.green),
-          ),
-          SizedBox(height: 40),
-          Text(
-            textAlign: TextAlign.center,
-            "Every item you recycle\nmakes a difference!",
-            style: Styles.textStyle20,
-          ),
-          SizedBox(height: 40),
-
-          Text(
-            textAlign: TextAlign.center,
-            "Get Started",
-            style: Styles.textStyle20.copyWith(color: Colors.green),
-          ),
-          BottonLoginWidget(),
-        ],
+        ),
       ),
     );
   }
