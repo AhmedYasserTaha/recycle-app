@@ -5,11 +5,12 @@ class TextfieldWidget extends StatelessWidget {
     super.key,
     required this.hintText,
     required this.prefixIcon,
+    this.controller,
   });
 
   final String? hintText;
   final Widget? prefixIcon;
-
+  final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,6 +29,7 @@ class TextfieldWidget extends StatelessWidget {
         ],
       ),
       child: TextField(
+        controller: controller,
         decoration: InputDecoration(
           border: InputBorder.none,
           prefixIcon: prefixIcon,

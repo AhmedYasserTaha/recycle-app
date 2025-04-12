@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:recycle_app/core/service/shard_pref.dart';
 import 'package:recycle_app/core/service/style.dart';
-import 'package:recycle_app/features/uplode_item/uplode_item.dart';
 import 'package:recycle_app/features/uplode_item/widget/uplode_item_body.dart';
 
 class ListViewCategoreis extends StatefulWidget {
@@ -11,6 +11,19 @@ class ListViewCategoreis extends StatefulWidget {
 }
 
 class _ListViewCategoreisState extends State<ListViewCategoreis> {
+  String? id;
+
+  Future<void> getHeSherdPref() async {
+    id = await SharedPreferenceHelper().getUserId();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getHeSherdPref(); // نقدر نتصل بالدالة هنا بدون الحاجة لـ onTheLode
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -32,12 +45,20 @@ class _ListViewCategoreisState extends State<ListViewCategoreis> {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => UplodeItemBody(catgory: "Plastic", id: ""),
-            ),
-          );
+          if (id != null) {
+            // تحقق إذا كان id موجود
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UplodeItemBody(catgory: title, id: id!),
+              ),
+            );
+          } else {
+            // في حالة لو id مش موجود
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('User ID is not available')));
+          }
         },
         child: Column(
           children: [
