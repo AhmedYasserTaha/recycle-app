@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recycle_app/core/service/style.dart';
+import 'package:recycle_app/features/uplode_item/widget/camera_icon_widget.dart';
 
 class UplodeItemBody extends StatelessWidget {
   const UplodeItemBody({super.key});
@@ -26,19 +27,7 @@ class UplodeItemBody extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 30),
-                    child: Container(
-                      height: 150,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black45, width: 2),
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white,
-                      ),
-                      child: Icon(Icons.camera_alt_rounded, size: 40),
-                    ),
-                  ),
+                  CameraIconWidget(),
                   Text(
                     textAlign: TextAlign.center,
                     "Enter your address you want the\nitem to be picked",
@@ -46,32 +35,37 @@ class UplodeItemBody extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
 
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    margin: EdgeInsets.symmetric(horizontal: 30),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black45, width: 2),
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        prefixIcon: Icon(
-                          Icons.location_on,
-                          size: 30,
-                          color: Colors.green,
-                        ),
-                        hintText: "Enter Address",
-                        hintStyle: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                  ),
+                  TextfieldWidget(),
                 ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class TextfieldWidget extends StatelessWidget {
+  const TextfieldWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      margin: EdgeInsets.symmetric(horizontal: 30),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black45, width: 2),
+        borderRadius: BorderRadius.circular(15),
+        color: Colors.white,
+      ),
+      child: TextField(
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          prefixIcon: Icon(Icons.location_on, size: 30, color: Colors.green),
+          hintText: "Enter Address",
+          hintStyle: TextStyle(fontSize: 20),
+        ),
       ),
     );
   }
