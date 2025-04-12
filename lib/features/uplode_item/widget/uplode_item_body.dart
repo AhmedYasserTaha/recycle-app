@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:random_string/random_string.dart';
+import 'package:recycle_app/core/service/shard_pref.dart';
 import 'package:recycle_app/core/service/style.dart';
 import 'package:recycle_app/features/onboarding/widget/botton_widget.dart';
 import 'package:recycle_app/features/uplode_item/widget/camera_icon_widget.dart';
@@ -23,6 +24,15 @@ class _UplodeItemBodyState extends State<UplodeItemBody> {
 
   final ImagePicker _picker = ImagePicker();
   File? selectedImage;
+
+  String? id, name;
+
+  getthesharedPref() async {
+    id = await SharedPreferenceHelper().getUserId();
+    name = await SharedPreferenceHelper().getUserName();
+    setState(() {});
+  }
+
   Future getImage() async {
     var image = await _picker.pickImage(source: ImageSource.gallery);
     selectedImage = File(image!.path);
@@ -116,6 +126,11 @@ class _UplodeItemBodyState extends State<UplodeItemBody> {
                         );
                         var downloadUrl =
                             await (await task).ref.getDownloadURL();
+                        Map<String, dynamic> addItem = {
+                          "Image": downloadUrl,
+                          "Address": addressController.text,
+                          "Quantity": quantityController.text,
+                        };
                       }
                     },
                     data: "Upload",
