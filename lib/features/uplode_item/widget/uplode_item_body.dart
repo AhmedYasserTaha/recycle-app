@@ -5,8 +5,8 @@ import 'package:recycle_app/features/uplode_item/widget/camera_icon_widget.dart'
 import 'package:recycle_app/features/uplode_item/widget/text_field_widget.dart';
 
 class UplodeItemBody extends StatelessWidget {
-  const UplodeItemBody({super.key});
-
+  const UplodeItemBody({super.key, required this.catgory, required this.id});
+  final String catgory, id;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

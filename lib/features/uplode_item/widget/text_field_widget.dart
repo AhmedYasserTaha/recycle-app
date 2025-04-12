@@ -21,7 +21,7 @@ class TextfieldWidget extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black12, // لون الظل
+            color: Colors.black45, // لون الظل
             blurRadius: 6, // مدى التمويه
             offset: Offset(2, 2), // اتجاه الظل
           ),
