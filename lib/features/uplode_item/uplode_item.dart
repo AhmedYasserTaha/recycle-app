@@ -39,11 +39,21 @@ class UplodeItem extends StatelessWidget {
                       child: Icon(Icons.camera_alt_rounded, size: 40),
                     ),
                   ),
+                  Text(
+                    textAlign: TextAlign.center,
+                    "Enter your address you want the\nitem to be picked",
+                    style: Styles.textStyle25,
+                  ),
                   SizedBox(height: 20),
-                  Text("Enter your address you want the item to be picked"),
+
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    decoration: BoxDecoration(color: Colors.white),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    margin: EdgeInsets.symmetric(horizontal: 30),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black45, width: 2),
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.white,
+                    ),
                     child: TextField(
                       decoration: InputDecoration(border: InputBorder.none),
                     ),
