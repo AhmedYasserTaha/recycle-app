@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recycle_app/core/service/style.dart';
+import 'package:recycle_app/features/home/home_page.dart';
 import 'package:recycle_app/features/onboarding/widget/botton_widget.dart';
 
 class OnBoaridPageBody extends StatelessWidget {
@@ -31,7 +32,20 @@ class OnBoaridPageBody extends StatelessWidget {
           ),
         ),
         Spacer(),
-        BottonWidget(),
+        BottonWidget(
+          data: "Get Started",
+          onTap: () {
+            () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return HomePage();
+                  },
+                ),
+              );
+            };
+          },
+        ),
         SizedBox(height: 100),
       ],
     );

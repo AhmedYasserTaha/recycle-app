@@ -1,11 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:recycle_app/features/home/home_page.dart';
 
 class BottonWidget extends StatelessWidget {
-  const BottonWidget({super.key});
-
+  const BottonWidget({super.key, required this.onTap, required this.data});
+  final void Function()? onTap;
+  final String data;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -14,24 +14,16 @@ class BottonWidget extends StatelessWidget {
         elevation: 5.0,
         borderRadius: BorderRadius.circular(20),
         child: InkWell(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return HomePage();
-                },
-              ),
-            );
-          },
+          onTap: onTap,
           child: Container(
-            height: 70,
+            height: 60,
             decoration: BoxDecoration(
               color: Colors.green,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Center(
               child: Text(
-                "Get Started",
+                data,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
