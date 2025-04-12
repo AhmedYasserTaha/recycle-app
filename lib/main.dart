@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:recycle_app/features/auth/login/login_page.dart';
 import 'package:recycle_app/features/uplode_item/uplode_item.dart';
 
 void main() async {
