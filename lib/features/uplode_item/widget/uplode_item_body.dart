@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:random_string/random_string.dart';
+import 'package:recycle_app/core/service/database.dart';
 import 'package:recycle_app/core/service/shard_pref.dart';
 import 'package:recycle_app/core/service/style.dart';
 import 'package:recycle_app/features/onboarding/widget/botton_widget.dart';
@@ -19,13 +20,14 @@ class UplodeItemBody extends StatefulWidget {
 }
 
 class _UplodeItemBodyState extends State<UplodeItemBody> {
-  TextEditingController addressController = new TextEditingController();
-  TextEditingController quantityController = new TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController quantityController = TextEditingController();
 
   final ImagePicker _picker = ImagePicker();
   File? selectedImage;
 
   String? id, name;
+  bool isLoading = false; // Variable to manage loading state
 
   getthesharedPref() async {
     id = await SharedPreferenceHelper().getUserId();
@@ -33,18 +35,26 @@ class _UplodeItemBodyState extends State<UplodeItemBody> {
     setState(() {});
   }
 
-  Future getImage() async {
+  Future<void> getImage() async {
     var image = await _picker.pickImage(source: ImageSource.gallery);
-    selectedImage = File(image!.path);
-    setState(() {});
+    if (image != null) {
+      setState(() {
+        selectedImage = File(image.path);
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getthesharedPref();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back, size: 30),
-        title: Text("Uplode Item", style: Styles.textStyle25),
+        title: Text("Upload Item", style: Styles.textStyle25),
         centerTitle: true,
       ),
       body: Column(
@@ -62,23 +72,31 @@ class _UplodeItemBodyState extends State<UplodeItemBody> {
               child: Column(
                 children: [
                   selectedImage != null
-                      ? Container(
-                        height: 150,
-                        width: 150,
-                        child: Image.file(selectedImage!, fit: BoxFit.cover),
+                      ? Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 50),
+                        child: Center(
+                          child: Container(
+                            height: 150,
+                            width: 150,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.file(
+                                selectedImage!,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
                       )
                       : GestureDetector(
-                        onTap: () {
-                          getImage();
-                        },
-
+                        onTap: getImage,
                         child: CameraIconWidget(),
                       ),
                   SizedBox(height: 30),
 
                   Text(
                     textAlign: TextAlign.center,
-                    "Enter your address you want the\nitem to be picked",
+                    "Enter your address where the item will be picked up from",
                     style: Styles.textStyle20,
                   ),
                   SizedBox(height: 10),
@@ -95,7 +113,7 @@ class _UplodeItemBodyState extends State<UplodeItemBody> {
 
                   Text(
                     textAlign: TextAlign.center,
-                    "Enter Quantity of item to be picked",
+                    "Enter quantity of item to be picked",
                     style: Styles.textStyle20,
                   ),
                   SizedBox(height: 10),
@@ -111,36 +129,89 @@ class _UplodeItemBodyState extends State<UplodeItemBody> {
 
                   SizedBox(height: 50),
 
-                  BottonWidget(
-                    onTap: () async {
-                      if (selectedImage != null &&
-                          addressController.text != "" &&
-                          quantityController.text != "") {
-                        String itemId = randomAlphaNumeric(10);
-                        Reference firebaseStorageRef = FirebaseStorage.instance
-                            .ref()
-                            .child("blogImage")
-                            .child(itemId);
-                        final UploadTask task = firebaseStorageRef.putFile(
-                          selectedImage!,
-                        );
-                        var downloadUrl =
-                            await (await task).ref.getDownloadURL();
-                        Map<String, dynamic> addItem = {
-                          "Image": downloadUrl,
-                          "Address": addressController.text,
-                          "Quantity": quantityController.text,
-                        };
-                      }
-                    },
-                    data: "Upload",
-                  ),
+                  bottomUploadMethod(context),
                 ],
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  BottonWidget bottomUploadMethod(BuildContext context) {
+    return BottonWidget(
+      onTap: () async {
+        if (
+        // selectedImage != null &&
+        addressController.text.isNotEmpty &&
+            quantityController.text.isNotEmpty) {
+          setState(() {
+            isLoading = true;
+          });
+
+          try {
+            String itemId = randomAlphaNumeric(10);
+            // Reference firebaseStorageRef = FirebaseStorage.instance
+            //     .ref()
+            //     .child("blogImage")
+            //     .child(itemId);
+
+            // final UploadTask task = firebaseStorageRef.putFile(selectedImage!);
+            // TaskSnapshot snapshot = await task.whenComplete(() => {});
+            // var downloadUrl = await snapshot.ref.getDownloadURL();
+
+            Map<String, dynamic> addItem = {
+              "Image": "downloadUrl",
+              "Address": addressController.text,
+              "Quantity": quantityController.text,
+              "UserId": id,
+              "Name": name,
+              "Status": "Pending",
+            };
+
+            await DatabaseMehtods().addUserUplodeItem(addItem, id!, itemId);
+            await DatabaseMehtods().addAdminItem(addItem, itemId);
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.green,
+                content: Text(
+                  "Item has been uploaded Successfully!",
+                  style: Styles.textStyle18,
+                ),
+              ),
+            );
+            setState(() {
+              addressController.text = "";
+              quantityController.text = "";
+              selectedImage = null;
+            });
+          } catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.red,
+                content: Text("Upload failed: $e", style: Styles.textStyle18),
+              ),
+            );
+          }
+
+          setState(() {
+            isLoading = false;
+          });
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.red,
+              content: Text(
+                "Please fill all fields and select an image.",
+                style: Styles.textStyle18,
+              ),
+            ),
+          );
+        }
+      },
+      data: isLoading ? "Uploading..." : "Upload",
     );
   }
 }
