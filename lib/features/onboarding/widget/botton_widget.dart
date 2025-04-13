@@ -3,9 +3,15 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class BottonWidget extends StatelessWidget {
-  const BottonWidget({super.key, required this.onTap, required this.data});
+  const BottonWidget({
+    super.key,
+    required this.onTap,
+    required this.data,
+    this.width,
+  });
   final void Function()? onTap;
   final String data;
+  final double? width;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -16,6 +22,7 @@ class BottonWidget extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           child: Container(
+            width: width,
             height: 60,
             decoration: BoxDecoration(
               color: Colors.green,

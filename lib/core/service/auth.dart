@@ -46,6 +46,7 @@ class Auth {
         "name": user.displayName,
         "image": user.photoURL,
         "Id": user.uid,
+        "Points": "0",
       };
 
       await DatabaseMehtods().addUserInfo(userInfoMap, user.uid);
