@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:recycle_app/admin/widget/details_user_widget.dart';
 import 'package:recycle_app/core/service/database.dart';
 import 'package:recycle_app/core/service/style.dart';
 
@@ -39,6 +40,33 @@ class _AdminApprovalState extends State<AdminApproval> {
       print('error : $e');
       return 'Error';
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Admin Approval", style: Styles.textStyle25),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 213, 213, 249),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+              ),
+              child: allProvals(), // ✅ عرض البيانات هنا
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget allProvals() {
@@ -88,92 +116,11 @@ class _AdminApprovalState extends State<AdminApproval> {
                             ),
                           ),
                           SizedBox(width: 10),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.person,
-                                      color: Colors.green,
-                                      size: 30,
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(ds['Name'], style: Styles.textStyle18),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.location_on,
-                                      color: Colors.green,
-                                      size: 30,
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      ds['Address'],
-                                      style: Styles.textStyle18,
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.inventory,
-                                      color: Colors.green,
-                                      size: 30,
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      ds['Quantity'],
-                                      style: Styles.textStyle18,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
+                          DetailsUserWidget(ds: ds),
                         ],
                       ),
                       SizedBox(height: 10),
-                      Center(
-                        child: InkWell(
-                          onTap: () async {
-                            String userPoints = await getUserpoints(
-                              ds['UserId'],
-                            );
-                            int updatePoints = int.parse(userPoints) + 100;
-                            await DatabaseMehtods().updateUserPoints(
-                              ds['UserId'],
-                              updatePoints.toString(),
-                            );
-                            await DatabaseMehtods().updateAdminRequest(ds.id);
-                            await DatabaseMehtods().updateUserRequest(
-                              ds["UserId"],
-                              ds.id,
-                            );
-                          },
-                          child: Container(
-                            width: 150,
-                            height: 45,
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "Approve",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      approverMethod(ds),
                     ],
                   ),
                 );
@@ -184,29 +131,37 @@ class _AdminApprovalState extends State<AdminApproval> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Admin Approval", style: Styles.textStyle25),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 213, 213, 249),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                ),
+  Center approverMethod(DocumentSnapshot<Object?> ds) {
+    return Center(
+      child: InkWell(
+        onTap: () async {
+          String userPoints = await getUserpoints(ds['UserId']);
+          int updatePoints = int.parse(userPoints) + 100;
+          await DatabaseMehtods().updateUserPoints(
+            ds['UserId'],
+            updatePoints.toString(),
+          );
+          await DatabaseMehtods().updateAdminRequest(ds.id);
+          await DatabaseMehtods().updateUserRequest(ds["UserId"], ds.id);
+        },
+        child: Container(
+          width: 150,
+          height: 45,
+          decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Center(
+            child: Text(
+              "Approve",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              child: allProvals(), // ✅ عرض البيانات هنا
             ),
           ),
-        ],
+        ),
       ),
     );
   }
