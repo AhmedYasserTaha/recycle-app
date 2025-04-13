@@ -4,14 +4,14 @@ import 'package:recycle_app/features/home/home_page.dart';
 import 'package:recycle_app/features/points/points.dart';
 import 'package:recycle_app/features/profile/profile.dart';
 
-class BottomNavExample extends StatefulWidget {
-  const BottomNavExample({super.key});
+class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({super.key});
 
   @override
-  State<BottomNavExample> createState() => _BottomNavExampleState();
+  State<BottomNavBar> createState() => _BottomNavBarState();
 }
 
-class _BottomNavExampleState extends State<BottomNavExample> {
+class _BottomNavBarState extends State<BottomNavBar> {
   int currentTabIndex = 0;
 
   late HomePage homePage;
