@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recycle_app/core/service/auth.dart';
-import 'package:recycle_app/core/service/style.dart';
+import 'package:recycle_app/core/utils/style.dart';
 
 class BottonLoginWidget extends StatelessWidget {
   const BottonLoginWidget({super.key});

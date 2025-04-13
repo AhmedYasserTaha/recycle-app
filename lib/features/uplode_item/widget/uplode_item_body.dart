@@ -5,10 +5,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:random_string/random_string.dart';
 import 'package:recycle_app/core/service/database.dart';
 import 'package:recycle_app/core/service/shard_pref.dart';
-import 'package:recycle_app/core/service/style.dart';
+import 'package:recycle_app/core/utils/style.dart';
 import 'package:recycle_app/features/onboarding/widget/botton_widget.dart';
-import 'package:recycle_app/features/uplode_item/widget/camera_icon_widget.dart';
-import 'package:recycle_app/features/uplode_item/widget/text_field_widget.dart';
+import 'package:recycle_app/features/uplode_item/widget/image_picker_widget.dart';
+import 'package:recycle_app/features/uplode_item/widget/text_picker_widget.dart';
 
 class UplodeItemBody extends StatefulWidget {
   const UplodeItemBody({super.key, required this.catgory, required this.id});
@@ -70,63 +70,37 @@ class _UplodeItemBodyState extends State<UplodeItemBody> {
               ),
               child: Column(
                 children: [
-                  selectedImage != null
-                      ? Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 50),
-                        child: Center(
-                          child: Container(
-                            height: 150,
-                            width: 150,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.file(
-                                selectedImage!,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                      : GestureDetector(
-                        onTap: getImage,
-                        child: CameraIconWidget(),
-                      ),
-                  SizedBox(height: 30),
-
-                  Text(
-                    textAlign: TextAlign.center,
-                    "Enter your address where the item will be picked up from",
-                    style: Styles.textStyle20,
+                  ImagePickerWidget(
+                    selectedImage: selectedImage,
+                    onTap: getImage,
                   ),
-                  SizedBox(height: 10),
-                  TextfieldWidget(
+                  const SizedBox(height: 30),
+
+                  TextSectionWidget(
+                    label:
+                        "Enter your address where the item will be picked up from",
                     controller: addressController,
-                    hintText: "Enter Address",
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.location_on,
                       color: Colors.green,
                       size: 30,
                     ),
+                    hintText: "Enter Address",
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
 
-                  Text(
-                    textAlign: TextAlign.center,
-                    "Enter quantity of item to be picked",
-                    style: Styles.textStyle20,
-                  ),
-                  SizedBox(height: 10),
-                  TextfieldWidget(
+                  TextSectionWidget(
+                    label: "Enter quantity of item to be picked",
                     controller: quantityController,
-                    hintText: "Enter Quantity",
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.inventory,
                       color: Colors.green,
                       size: 30,
                     ),
+                    hintText: "Enter Quantity",
                   ),
 
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
 
                   bottomUploadMethod(context),
                 ],

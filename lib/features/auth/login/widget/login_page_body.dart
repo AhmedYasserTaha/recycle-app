@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recycle_app/core/service/style.dart';
+import 'package:recycle_app/core/utils/style.dart';
 import 'package:recycle_app/features/auth/login/widget/botton_login_widget.dart';
 
 class LoginPageBody extends StatelessWidget {

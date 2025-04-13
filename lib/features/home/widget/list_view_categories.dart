@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recycle_app/core/service/shard_pref.dart';
-import 'package:recycle_app/core/service/style.dart';
+import 'package:recycle_app/core/utils/style.dart';
 import 'package:recycle_app/features/uplode_item/widget/uplode_item_body.dart';
 
 class ListViewCategoreis extends StatefulWidget {

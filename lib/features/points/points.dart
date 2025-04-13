@@ -1,8 +1,47 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:recycle_app/core/service/style.dart';
+import 'package:recycle_app/core/service/shard_pref.dart';
+import 'package:recycle_app/core/utils/style.dart';
+import 'package:recycle_app/features/onboarding/widget/botton_widget.dart';
 
-class Points extends StatelessWidget {
+class Points extends StatefulWidget {
   const Points({super.key});
+
+  @override
+  State<Points> createState() => _PointsState();
+}
+
+class _PointsState extends State<Points> {
+  String? id, myPoints;
+  gettheSaredPref() async {
+    id = await SharedPreferenceHelper().getUserId();
+    setState(() {});
+  }
+
+  onTheLoad() async {
+    await gettheSaredPref();
+    myPoints = await getUserpoints(id!);
+    setState(() {});
+  }
+
+  Future<String> getUserpoints(String docId) async {
+    TextEditingController pointsController = new TextEditingController();
+    TextEditingController upiController = new TextEditingController();
+    try {
+      DocumentSnapshot docSnapshot =
+          await FirebaseFirestore.instance.collection('users').doc(docId).get();
+      if (docSnapshot.exists) {
+        var data = docSnapshot.data() as Map<String, dynamic>;
+        var points = data["Points"];
+        return points;
+      } else {
+        return "No document";
+      }
+    } catch (e) {
+      print('error : $e');
+      return 'Error';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +65,7 @@ class Points extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                    margin: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
                     padding: EdgeInsets.all(10),
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -68,6 +107,8 @@ class Points extends StatelessWidget {
                       ],
                     ),
                   ),
+
+                  BottonWidget(onTap: () {}, data: "Reedem Points"),
                 ],
               ),
             ),

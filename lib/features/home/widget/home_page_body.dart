@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:recycle_app/core/service/style.dart';
+import 'package:recycle_app/core/utils/style.dart';
 import 'package:recycle_app/features/home/widget/app_bar_profile.dart';
-import 'package:recycle_app/features/home/widget/botton_navigation_bar.dart';
 import 'package:recycle_app/features/home/widget/list_view_categories.dart';
 import 'package:recycle_app/features/home/widget/pending_requset_widget.dart';
 

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:recycle_app/admin/widget/details_user_widget.dart';
 import 'package:recycle_app/core/service/database.dart';
-import 'package:recycle_app/core/service/style.dart';
+import 'package:recycle_app/core/utils/style.dart';
 
 class AdminApproval extends StatefulWidget {
   const AdminApproval({super.key});

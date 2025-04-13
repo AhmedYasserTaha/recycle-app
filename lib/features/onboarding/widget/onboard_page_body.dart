@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recycle_app/core/service/style.dart';
+import 'package:recycle_app/core/utils/style.dart';
 import 'package:recycle_app/features/auth/login/login_page.dart';
 import 'package:recycle_app/features/onboarding/widget/botton_widget.dart';
 

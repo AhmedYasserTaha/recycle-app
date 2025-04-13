@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:recycle_app/core/service/style.dart';
+import 'package:recycle_app/core/utils/style.dart';
 
 class DetailsUserWidget extends StatelessWidget {
   const DetailsUserWidget({super.key, required this.ds});

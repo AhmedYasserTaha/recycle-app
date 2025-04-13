@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recycle_app/core/service/style.dart';
+import 'package:recycle_app/core/utils/style.dart';
 
 class AppBarPrfiole extends StatelessWidget {
   const AppBarPrfiole({super.key});
